@@ -27,12 +27,12 @@ A simple html template to better display user information
 # Installation Steps
 1. Run script
 ```sh
-bash <(curl -Ls https://github.com/cortez24rus/marz-sub/raw/main/marz-sub.sh)
+bash <(curl -Ls https://raw.githubusercontent.com/igoris76/marz-sub/main/marz-sub.sh)
 ```
 
-2. Restart Marzban
+2. Restart Marzneshin
 ```sh
-marzban restart
+marzneshin restart
 ```
 
 ## Update
