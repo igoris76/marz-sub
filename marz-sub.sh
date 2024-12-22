@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Определение путей к директориям
-base_dir="/var/lib/marzban/templates"
+base_dir="/var/lib/marzneshin/templates"
 declare -a dirs=("singbox" "v2ray" "clash" "subscription")
 
 # Создание директорий, если они не существуют
@@ -20,9 +20,8 @@ wget -O "$base_dir/clash/settings.yml" "https://github.com/cortez24rus/marz-sub/
 wget -O "$base_dir/singbox/default.json" "https://github.com/BLUEBL0B/Secret-Sing-Box/raw/main/Config-Examples-WS/Client-VLESS-WS.json" || echo "Ошибка загрузки Client-VLESS-WS.json"
 
 # Получение переменных DOMAIN и SERVER-IP
-DOMAIN=$(grep "XRAY_SUBSCRIPTION_URL_PREFIX" /opt/marzban/.env | cut -d '"' -f 2 | sed 's|https://||')
+DOMAIN=$(grep "XRAY_SUBSCRIPTION_URL_PREFIX" /etc/opt/marzneshin/.env | cut -d '"' -f 2 | sed 's|https://||')
 SERVER_IP=$(wget -qO- https://ipinfo.io/ip)
-
 
 # Запрос пользовательской ссылки
 read -p "Введите вашу Telegram ссылку, которая будет расположена на странице подписки (например, https://t.me/yourID): " tg_user_link
@@ -36,7 +35,7 @@ sed -i "s#https://t.me/yourID#$tg_escaped_link#g" "$base_dir/subscription/index.
 
 echo "Ссылка успешно обновлена в index.html"
 
-env_file="/opt/marzban/.env"
+env_file="/etc/opt/marzneshin/.env"
 
 # Обновление или добавление настроек в .env файл
 update_or_add() {
@@ -53,7 +52,7 @@ update_or_add() {
 }
 
 # Обновление переменных конфигурации
-update_or_add "CUSTOM_TEMPLATES_DIRECTORY" "/var/lib/marzban/templates/" "$env_file"
+update_or_add "CUSTOM_TEMPLATES_DIRECTORY" "/var/lib/marzneshin/templates/" "$env_file"
 update_or_add "SUBSCRIPTION_PAGE_TEMPLATE" "subscription/index.html" "$env_file"
 update_or_add "SINGBOX_SUBSCRIPTION_TEMPLATE" "singbox/default.json" "$env_file"
 update_or_add "CLASH_SUBSCRIPTION_TEMPLATE" "clash/default.yml" "$env_file"
@@ -97,4 +96,4 @@ jq --arg domain "$DOMAIN" --arg server_ip "$SERVER_IP" '
 ' "$base_dir/singbox/default.json" > "$base_dir/singbox/temp.json" && mv "$base_dir/singbox/temp.json" "$base_dir/singbox/default.json"
 
 echo "Скрипт выполнен успешно."
-echo "Не забудь перезапустить Marzban."
+echo "Не забудь перезапустить Marzneshin."
